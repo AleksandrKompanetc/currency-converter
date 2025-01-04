@@ -69,7 +69,7 @@ function App() {
         </select>
       </div>
       <p>
-        {amount} {fromCurrency} - {convertedAmount} {toCurrency}
+        {amount} {fromCurrency} = {convertedAmount} {toCurrency}
       </p>
     </div>
   );
