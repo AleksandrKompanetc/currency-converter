@@ -6,6 +6,7 @@ function App() {
   const [amount, setAmount] = useState(1);
   const [fromCurrency, setFromCurrency] = useState('USD');
   const [toCurrency, setToCurrency] = useState('UAH');
+  const [exchangeRate, setExchangeRate] = useState(1);
 
   useEffect(() => {
     const fetchCurrencies = async () => {
@@ -14,7 +15,7 @@ function App() {
         const data = await response.json();
 
         setCurrencies(data);
-        
+
       } catch (error) {
         console.error('Loading data error: ', error)
       }
@@ -22,6 +23,16 @@ function App() {
 
     fetchCurrencies()
   }, [])
+
+  useEffect(() => {
+    if (currencies.length > 0) {
+      const fromRate = currencies.find((currency) => currency.cc === fromCurrency)?.rate || 1;
+      const toRate = currencies.find((currency) => currency.cc === toCurrency)?.rate || 1;
+      setExchangeRate(toRate / fromRate);
+    }
+  }, [currencies, fromCurrency, toCurrency]);
+
+  const convertedAmount = (amount * exchangeRate).toFixed(2);
 
   return (
     <div style={{textAlign: 'center', marginTop: '50px'}}>
@@ -58,7 +69,7 @@ function App() {
         </select>
       </div>
       <p>
-        {/* {amount} {fromCurrency} - {convertedAmount} {toCurrency} */}
+        {amount} {fromCurrency} - {convertedAmount} {toCurrency}
       </p>
     </div>
   );
