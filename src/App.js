@@ -29,7 +29,21 @@ function App() {
           ))}
         </select>
         <span style={{marginRight: '10px'}}>to</span>
+        <select
+          value={toCurrency}
+          onChange={(e) => setToCurrency(e.target.value)}
+          style={{padding: '5px'}}
+        >
+          {currencies.map((currency) => (
+            <option key={currency.r030} value={currency.cc}>
+              {currency.cc}
+            </option>
+          ))}
+        </select>
       </div>
+      <p>
+        {/* {amount} {fromCurrency} - {convertedAmount} {toCurrency} */}
+      </p>
     </div>
   );
 }
